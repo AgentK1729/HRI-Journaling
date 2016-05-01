@@ -31,7 +31,7 @@ def sel():
    label.config(text = selection)
 
 top = Tk()
-top.title("Journaling application")
+
 
 
 Label(top, text="Happy", font=Font(size=15)).grid(row=0, column=0)

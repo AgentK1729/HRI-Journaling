@@ -45,5 +45,5 @@ while True:
 		flag = True
 	else:
 		threads[1].start()
-	sleep(7200)
+	sleep(5)
 	threads[2].start()

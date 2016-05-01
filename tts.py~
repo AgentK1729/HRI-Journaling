@@ -1,0 +1,4 @@
+from gtts import gTTS
+greeting = ("Hello! How are you doing today?")
+tts = gTTS(text=greeting, lang='en')
+tts.save("greeting.mp3")
