@@ -2,7 +2,8 @@ from os import system
 from time import sleep
 from Tkinter import *
 from tkFont import Font
-import threading
+import threading, vlc
+from tts import speak
 
 
 class AlertThread(threading.Thread):
@@ -23,7 +24,10 @@ class AlertThread(threading.Thread):
 			alert.mainloop()
 			
 		elif self.proc == 1:
-			system('mpg321 alert.mp3')
+			vlc.MediaPlayer('alert.mp3').play()
+			
+		elif self.proc == 3:
+			speak()
 			
 		else:
 			import screen1
@@ -33,8 +37,9 @@ class AlertThread(threading.Thread):
 
 
 while True:
-	threads = [AlertThread(2), AlertThread(0), AlertThread(1)]
+	threads = [AlertThread(2), AlertThread(0), AlertThread(1), AlertThread(3)]
 	threads[0].start()
+	threads[3].start()
 	sleep(7200)
 	threads[1].start()
 	threads[2].start()
