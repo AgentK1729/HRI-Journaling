@@ -4,46 +4,57 @@ from tkinter import *
 from tkinter import font
 import threading, vlc
 from os import system
-
-
+from createLib import *
+               
 class AlertThread(threading.Thread):
-	def __init__(self, proc):
-		threading.Thread.__init__(self)
-		self.proc = proc
+               def __init__(self, proc):
+                              threading.Thread.__init__(self)
+                              self.proc = proc
+
 		
-	def run(self):
-		if self.proc == 0:
-			alert = Tk()
-			Label(alert, text=" ", font=font.Font(size=50)).grid(row=0, column=0)
-			Label(alert, text=" ", font=font.Font(size=50)).grid(row=0, column=1)
-			Label(alert, text=" ", font=font.Font(size=50)).grid(row=1, column=0)
-			Label(alert, text="Please make a journal entry", font=font.Font(size=50)).grid(row=1, column=1)
-			Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=0)
-			Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=1)
-			Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=2)
-			alert.mainloop()
+               def run(self):
+                              if self.proc == 0:
+                                             alert = Tk()
+                                             Label(alert, text=" ", font=font.Font(size=50)).grid(row=0, column=0)
+                                             Label(alert, text=" ", font=font.Font(size=50)).grid(row=0, column=1)
+                                             Label(alert, text=" ", font=font.Font(size=50)).grid(row=1, column=0)
+                                             Label(alert, text="Please make a journal entry", font=font.Font(size=50)).grid(row=1, column=1)
+                                             Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=0)
+                                             Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=1)
+                                             Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=2)
+                                             alert.mainloop()
 			
-		elif self.proc == 1:
-			system('mpg321 alert.mp3')
+                              elif self.proc == 1:
+                                             system('mpg321 alert.mp3')
 			
-		elif self.proc == 3:
-			system('mpg321 greeting.mp3')
+                              elif self.proc == 3:
+                                             system('mpg321 greeting.mp3')
 			
-		else:
-			import screen1
-			screen1.top.mainloop()
+                              else:
+                                             import screen1
+                                             screen1.top.mainloop()
 		
 
 
 
 flag = False
 while True:
-	threads = [AlertThread(2), AlertThread(0), AlertThread(1), AlertThread(3)]
-	threads[0].start()
-	if flag == False:
-		threads[3].start()
-		flag = True
-	else:
-		threads[1].start()
-	sleep(7200)
-	threads[2].start()
+
+               #turn robot into passive mode and turn to user
+               turnToUser()
+               sleep(1)
+
+               threads = [AlertThread(2), AlertThread(0), AlertThread(1), AlertThread(3)]
+               threads[0].start()
+               if flag == False:
+                              threads[3].start()
+                              flag = True
+               else:
+                              threads[1].start()
+
+               #pause time between reminders
+               #7200 is 2 hours
+               sleep(60)
+
+              
+               threads[2].start()

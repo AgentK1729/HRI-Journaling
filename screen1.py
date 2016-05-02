@@ -3,38 +3,47 @@ from tkinter import font
 from PIL import ImageTk, Image
 import requests
 
+import create
+import dance
+from time import sleep
+from createLib import *
+
+
+
+
 def record():
-	global top
-	link = "https://api.thingspeak.com/update?api_key=WGMFL5ZJKPORH0IN&field1=%d&field2=%d&field3=%d&field4=%d&field5=%d&field6=%d&field7=%d"
+        global top
+
+        link = "https://api.thingspeak.com/update?api_key=WGMFL5ZJKPORH0IN&field1=%d&field2=%d&field3=%d&field4=%d&field5=%d&field6=%d&field7=%d"
 	
-	try:
-		f1 = open("id.txt", "r")
-		ID = int(f1.read())
+        try:
+                f1 = open("id.txt", "r")
+                ID = int(f1.read())
+                
+        except IOError:
+                from random import randint
+                f1 = open("id.txt", "w")
+                f1.write(str(randint(1,1000)))
+                f1 = open("id.txt", "r")
+                ID = int(f1.read())
 	
-	except IOError:
-		from random import randint
-		f1 = open("id.txt", "w")
-		f1.write(str(randint(1,1000)))
-		f1 = open("id.txt", "r")
-		ID = int(f1.read())
+        link = link % (ID, var1.get(), var2.get(), var3.get(), var4.get(), var5.get(), var6.get())
+        r = requests.get(link)
 	
-	link = link % (ID, var1.get(), var2.get(), var3.get(), var4.get(), var5.get(), var6.get())
-	r = requests.get(link)
+        link = "https://api.thingspeak.com/update?api_key=PDXN073A0L2GXWXF&field1=%s&field2=%s&field3=%s&field4=%s"
+        link = link % (ID, day.get(1.0,END), accomplish.get(1.0,END), feeling.get(1.0,END))
+        r = requests.get(link)
 	
-	link = "https://api.thingspeak.com/update?api_key=PDXN073A0L2GXWXF&field1=%s&field2=%s&field3=%s&field4=%s"
-	link = link % (ID, day.get(1.0,END), accomplish.get(1.0,END), feeling.get(1.0,END))
-	r = requests.get(link)
-	
-	alert = Tk()
-	Label(alert, text=" ", font=font.Font(size=50)).grid(row=0, column=0)
-	Label(alert, text=" ", font=font.Font(size=50)).grid(row=0, column=1)
-	Label(alert, text=" ", font=font.Font(size=50)).grid(row=1, column=0)
-	Label(alert, text="Journal entry recorded", font=font.Font(size=50)).grid(row=1, column=1)
-	Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=0)
-	Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=1)
-	Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=2)
-	alert.mainloop()
-	
+        alert = Tk()
+        Label(alert, text=" ", font=font.Font(size=50)).grid(row=0, column=0)
+        Label(alert, text=" ", font=font.Font(size=50)).grid(row=0, column=1)
+        Label(alert, text=" ", font=font.Font(size=50)).grid(row=1, column=0)
+        Label(alert, text="Journal entry recorded", font=font.Font(size=50)).grid(row=1, column=1)
+        turnFromUser()
+        Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=0)
+        Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=1)
+        Label(alert, text=" ", font=font.Font(size=50)).grid(row=2, column=2)
+        alert.mainloop()
 
 def sel():
    selection = str(var.get())

@@ -1,8 +1,16 @@
+import create
+from time import sleep
+import serial
+
 def initRobot():
         #This opens the serial connection to the create
         #if this raises an error, try /dev/ttyUSB1
         #if this is still an error try listing the ports in /dev/
-        r =create.Create('/dev/ttyUSB0')
+        try:
+                r =create.Create('/dev/ttyUSB0')
+        
+        except serial.serialutil.SerialException:
+                r = create.Create('/dev/ttyUSB1')
         #r.reset()
         sleep(2)
 
