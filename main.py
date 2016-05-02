@@ -54,7 +54,7 @@ while True:
 
                #pause time between reminders
                #7200 is 2 hours
-               sleep(60)
+               sleep(7000)
 
               
                threads[2].start()
